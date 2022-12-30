@@ -5,6 +5,7 @@ import (
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
 	"log"
 	"os"
 )
@@ -28,4 +29,11 @@ func ConexionBD() *mongo.Client {
 	}
 
 	return client
+}
+
+func Ping() bool {
+	if err := MongoClient.Ping(context.TODO(), readpref.Primary()); err != nil {
+		return false
+	}
+	return true
 }
